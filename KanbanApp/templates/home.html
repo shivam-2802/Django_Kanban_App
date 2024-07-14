@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KanbanApp Home</title>
+        
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: white;
+            text-decoration: none;
+        }
+
+        body {
+            background-color: rgb(20, 20, 20);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .section1 {
+            width: 1080px;
+            padding: 25px 0;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            flex: 1;
+        }
+
+        .logo h1 {
+            font-size: 25px;
+            color: rgb(255, 255, 255);
+        }
+
+        .logo span {
+            color: rgb(255, 183, 0);
+        }
+
+        .list {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .list a {
+            transition: 0.25s ease;
+        }
+
+        .list a:hover {
+            color: rgb(255, 183, 0);
+        }
+
+        .section2 {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .btndiv {
+            width: 1080px;
+            padding: 25px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .add-task-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgb(255, 183, 0);
+            padding: 10px;
+            width: 150px;
+            outline: none;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 20px;
+            font-weight: bold;
+            transition: 0.25s ease;
+        }
+
+        .addbtn {
+            color: black;
+        }
+
+        .add-task-btn:hover {
+            background-color: rgb(204, 204, 204);
+        }
+
+        .save-changes-btn button{
+            background-color: rgb(228, 228, 228);
+            color: black;
+            font-weight: bold;
+            font-size: 15px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .save-changes-btn button:hover{
+            background-color: rgb(98, 255, 0);
+        }
+
+        .board {
+            display: flex;
+            justify-content: space-between;
+
+            width: 1080px;
+        }
+
+        .column {
+            width: 340px;
+            padding: 10px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: rgb(40, 40, 40);
+            border-radius: 10px;
+            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+        }
+
+        .column-header {
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+
+        .card {
+            width: 240px;
+            padding: 10px;
+            margin: 15px;
+            background-color: rgb(255, 255, 255);
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card h2 {
+            color: black;
+            font-size: 25px;
+        }
+
+        .card p {
+            color: black;
+            font-size: 16px;
+        }
+
+        .card span {
+            background-color: rgb(234, 234, 234);
+            height: 100%;
+            width: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: solid 2px rgb(0, 143, 252);
+        }
+
+        .card a {
+            color: black;
+            font-size: 15px;
+        }
+
+        .cardbtns {
+            display: flex;
+            width: 100%;
+            height: 30px;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+
+        .delete-btn {
+            background-color: rgb(234, 234, 234);
+            color: black;
+            font-size: 15px;
+            width: 55px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: solid 2px rgb(252, 0, 0);
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="section1">
+            <div class="logo">
+                <h1>Kanban<span>App</span></h1>
+            </div>
+            <div class="list">
+                <a href="#">Profile</a>
+                <a href="#">Settings</a>
+                <a href="{% url 'logout' %}">Logout</a>
+            </div>
+        </div>
+        <div class="section2">
+            <div class="btndiv">
+                <a href="{% url 'add_task' %}" class="add-task-btn">
+                    <div class="addbtn">Add Task</div>
+                </a>
+                <div class="save-changes-btn">
+                    <button onclick="saveChanges()">Save Changes</button>
+                </div>
+            </div>
+            <div class="board">
+                <div class="column" id="todo-column" ondrop="drop(event, 'todo')" ondragover="allowDrop(event)">
+                    <div class="column-header">To Do</div>
+
+                    {% for task in user_tasks %}
+
+                    <div class="card" draggable="true" ondragstart="drag(event, '{{ task.id }}')" id="task-{{ task.id }}" data-task-id="{{ task.id }}">
+                        <input type="hidden" name="todo_tasks[]" value="{{ task.id }}">
+                        <h2>{{ task.title }}</h2>
+                        <p>{{ task.description }}</p>
+                        <div class="cardbtns">
+                            <span><a href="/edit-task/{{ task.id }}/" class="edit-link">Edit</a></span>
+                            <form action="/delete-task/{{ task.id }}/" method="post" class="delete-form">
+                                {% csrf_token %}
+                                <button type="submit" class="delete-btn">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+                <div class="column" id="doing-column" ondrop="drop(event, 'doing')" ondragover="allowDrop(event)">
+                    <div class="column-header">Doing</div>
+
+                    {% for task in user_tasksdoing %}
+
+                    <div class="card" draggable="true" ondragstart="drag(event, '{{ task.id }}')" id="task-{{ task.id }}" data-task-id="{{ task.id }}">
+                        <input type="hidden" name="doing_tasks[]" value="{{ task.id }}">
+                        <h2>{{ task.title }}</h2>
+                        <p>{{ task.description }}</p>
+                        <div class="cardbtns">
+                            <span><a href="/edit-task/{{ task.id }}/" class="edit-link">Edit</a></span>
+                            <form action="/delete-task/{{ task.id }}/" method="post" class="delete-form">
+                                {% csrf_token %}
+                                <button type="submit" class="delete-btn">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+                <div class="column" id="done-column" ondrop="drop(event, 'done')" ondragover="allowDrop(event)">
+                    <div class="column-header">Done</div>
+
+                    {% for task in user_tasksdone %}
+
+                    <div class="card" draggable="true" ondragstart="drag(event, '{{ task.id }}')" id="task-{{ task.id }}" data-task-id="{{ task.id }}">
+                        <input type="hidden" name="done_tasks[]" value="{{ task.id }}">
+                        <h2>{{ task.title }}</h2>
+                        <p>{{ task.description }}</p>
+                        <div class="cardbtns">
+                            <span><a href="/edit-task/{{ task.id }}/" class="edit-link">Edit</a></span>
+                            <form action="/delete-task/{{ task.id }}/" method="post" class="delete-form">
+                                {% csrf_token %}
+                                <button type="submit" class="delete-btn">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <script>
+
+function allowDrop(ev) {
+    ev.preventDefault();
+}
+
+function drag(ev, taskId) {
+    ev.dataTransfer.setData("taskId", taskId);
+}
+
+function drop(ev) {
+    ev.preventDefault();
+    var taskId = ev.dataTransfer.getData("taskId");
+    var taskElement = document.getElementById('task-' + taskId);
+    var columnId = taskElement.parentElement.id;
+    ev.target.appendChild(taskElement);
+}
+
+
+
+function saveChanges() {
+    var taskData = {};
+    document.querySelectorAll('.column').forEach(column => {
+        var columnId = column.id;
+        taskData[columnId] = [];
+        column.querySelectorAll('.card').forEach(card => {
+            taskData[columnId].push(card.dataset.taskId);
+        });
+    });
+
+    // Log taskData to console before sending it
+    console.log('Task data:', taskData);
+
+    fetch('/save-changes/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken')
+        },
+        body: JSON.stringify(taskData)
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log('Changes saved successfully');
+        } else {
+            console.error('Failed to save changes:', response.statusText);
+        }
+    })
+    .catch(error => {
+        console.error('Error saving changes:', error);
+    });
+}
+
+
+// Function to get the CSRF token from the cookie
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            // Check if the cookie name matches the CSRF token cookie name
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                // Get the CSRF token from the cookie
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+
+    </script>
+
+</body>
+
+</html>

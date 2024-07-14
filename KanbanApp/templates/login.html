@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KanbanApp Login</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: white;
+        }
+        
+        body {
+            background-color: rgb(20, 20, 20);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: rgb(40, 40, 40);
+            width: 400px;
+            margin-top: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+    
+        form{
+            display: flex;
+            flex-direction: column;
+        }
+    
+        .logo{
+            padding: 25px 0;
+            padding-bottom: 15px;
+            border-bottom: 1px solid white;
+        }
+    
+        .logo h1{
+            font-size: 25px;
+            color: rgb(255, 255, 255);
+        }
+    
+        .logo span{
+            color: rgb(255, 183, 0);
+        }
+    
+        h2{
+            font-size: 20px;
+            margin: 25px 0;
+        }
+    
+        form{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    
+        input{
+            outline: none;
+            color: black;
+            font-size: 15px;
+            width: 300px;
+            padding: 8px;
+            margin: 0 0 15px 0;
+        }
+    
+        input:focus{
+            background-color: rgb(255, 250, 228);
+        }
+    
+        ::placeholder {
+            color: black;
+        }
+    
+        button{
+            background-color: rgb(255, 183, 0);
+            color: black;
+            font-weight: bold;
+            font-size: 15px;
+            width: 120px;
+            padding: 7px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            margin: 0 0 20px 0;
+        }
+    
+        p{
+            margin: 0 0 25px 0;
+        }
+    
+        a{
+            color: rgb(255, 183, 0);
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+            <div class="logo">
+                <h1>Kanban<span>App</span></h1>
+            </div>
+            <h2>Login To Your Account</h2>
+            <form method="POST", action="#">
+                {% csrf_token %}
+                <input type="text" placeholder="Username" name="username" required>
+                <input type="password" placeholder="Password" name="password" required>
+                <button type="submit">Login</button>
+            </form>
+            <p>Don't have any account? <a href="/signup">Sign Up</a></p>
+    </div>
+</body>
+</html>

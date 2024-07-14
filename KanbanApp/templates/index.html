@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KanbanApp</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: white;
+        }
+
+        body{
+            background-color: rgb(20, 20, 20);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container{
+            display: flex;
+            flex-direction: column;
+            width: 950px;
+            height: 500px;
+            background-color: rgb(40, 40, 40);
+            margin-top: 40px;
+            border-radius: 25px;
+            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+        }
+        
+        .nav{
+            display: flex;
+            justify-content: space-between;
+            padding: 25px 50px 0 50px;
+            align-items: center;
+        }
+
+        .logo{
+            display: flex;
+            flex: 1;
+        }
+
+        .logo h1{
+            font-size: 25px;
+            color: rgb(255, 255, 255);
+        }
+
+        .logo span{
+            color: rgb(255, 183, 0);
+        }
+
+        .menu{
+            display: flex;
+            flex: 1;
+            justify-content: flex-end;
+        }
+
+        .menulist{
+            display: flex;
+            gap: 25px;
+        }
+
+        .menulist a{
+            color: white;
+            text-decoration: none;
+            transition: 0.25s ease;
+        }
+
+        .menulist a:hover{
+            color: rgb(255, 183, 0);
+        }
+
+        .content{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+
+        .desc{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .desc h1{
+            margin: 8px;
+        }
+
+        .desc p{
+            font-size: 18px;
+        }
+
+        .btn{
+            display: flex;
+            margin: 10px;
+            align-items: center;
+        }
+
+        .btn span{
+            background-color: rgb(255, 183, 0);
+            padding: 5px 15px;
+            font-size: 20px;
+            margin: 10px;
+            border-radius: 5px;
+        }
+
+        .btn a{
+            text-decoration: none;
+            color: black;
+            font-weight: bold;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav">
+            <div class="logo">
+                <h1>Kanban<span>App</span></h1>
+            </div>
+            <div class="menu">
+                <div class="menulist">
+                    <a href="/signup">Sign Up</a>
+                    <a href="/login">Login</a>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+                <div class="desc">
+                    <h1>Your Task Management Companion</h1>
+                    <p>Create boards, visualize and track activities, and manage your workflow effortlessly.</p>
+                    <p>Elevate your productivity now!</p>
+                    <div class="btn"><span><a href="/signup">Get Started</a></span><p>it's free.</p></div>
+                </div>
+        </div>
+    </div>
+</body>
+</html>
