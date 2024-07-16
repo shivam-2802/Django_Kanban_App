@@ -1,2 +1,2 @@
 # Django_Kanban_App
-This is a Kanban board application made using Django. I have implemented the HTML drag and drop functionality in this project to move cards throughout the columns of the kanban board.
+Kanban App is a drag and drop kanban board web application used for tracking and managing tasks and project workflow. This application is built using HTML, CSS, JavaScript for frontend and Python Django for backend.
